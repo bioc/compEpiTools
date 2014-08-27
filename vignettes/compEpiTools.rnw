@@ -1,0 +1,279 @@
+%\VignetteIndexEntry{compEpiTools}
+%\VignetteEngine{knitr::knitr}
+%\VignetteKeywords{epigenetics}
+%\VignetteDepends{compEpiTools}
+%\VignettePackage{compEpiTools}
+
+\documentclass[11pt]{article}
+\usepackage[margin=2cm,nohead]{geometry}
+
+\usepackage{hyperref}
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\texttt{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+
+
+\newcommand{\software}[1]{\textsf{#1}}
+\newcommand{\R}{\software{R}}
+\newcommand{\Bioconductor}{\software{Bioconductor}}
+\newcommand{\compEpiTools}{\Rpackage{compEpiTools}}
+
+\title{compEpiTools}
+\author{Mattia Pelizzola, Kamal Kishore}
+
+\begin{document}
+
+\maketitle
+<<options,echo=FALSE>>=
+options(width=72)
+@
+
+\tableofcontents
+
+%
+\section{Overview}
+In this document you can find a brief tutorial on the \Rpackage{compEpiTools} package,
+a toolkit for the integrative analysis of epigenomics data, which can be complemented
+with the \Rpackage{methylPipe} package to include support on DNA methylation data.
+\Rpackage{compEpiTools} offers multiple functionalities covering five main areas:
+Counting reads in genomic regions, Annotation of genomic regions, Functional 
+annotation, Visualization, and Other (see ?compEpiTools at the R prompt for a
+brief overview). Many of these methods and functions concern topics of interest
+in epigenomics, including: identification of enhancer and matching with putative
+target regions, indentification of long non coding RNAs based on chromatin features,
+computation of PolII stalling index, determination of promoter CpG content etc.
+Finally, functionalities are avaliable to integrate and display heterogenous
+data-types across multiple genomic regions.
+
+%
+\section{Counting reads in GRanges}
+These are mostly \Rclass{GRanges} methods facilitating several common operations
+concerning \textbf{counting} in genomic regions aligned reads stored in BAM files.
+In this example a small BAM file is used to compute the base-level coverage using
+\Rmethod{GRbaseCoverage}. Next the count of reads is determined for a whole genomic
+region (\Rmethod{GRcoverage}) and dividing it in 5 equally sized bins 
+(\Rmethod{GRcoverageInbins}). Finally the summit, i.e. the position of maximum coverage
+is identified and highlighted in the plot of base-level coverage for one of these regions.
+
+<<libs, message=FALSE, cache=TRUE, warning= FALSE>>=
+library(compEpiTools)
+require(BSgenome.Mmusculus.UCSC.mm9)
+require(TxDb.Mmusculus.UCSC.mm9.knownGene)
+require(org.Mm.eg.db)
+require(rtracklayer)
+txdb <- TxDb.Mmusculus.UCSC.mm9.knownGene
+@
+
+\begin{center}
+<<GRcounting,fig.width=6,fig.height=5,out.width='.85\\textwidth',message=FALSE,cache=TRUE>>=
+bampath <- system.file("extdata", "ex1.bam", package="Rsamtools")
+ir <- IRanges(start=c(1000, 100), end=c(2000, 1000))
+gr <- GRanges(seqnames=Rle(c('seq1','seq2')), ranges=ir)
+res <- GRbaseCoverage(Object=gr, bam=bampath)
+GRcoverage(Object=gr, bam=bampath, Nnorm=FALSE, Snorm=FALSE)[1]
+GRcoverageInbins(Object=gr, bam=bampath, Nnorm=FALSE, Snorm=FALSE, Nbins=5)[1,]
+summit <- GRcoverageSummit(Object=gr, bam=bampath)
+plot(res[[1]], type='l', xlab='bp', ylab='reads count')
+abline(v=start(summit[1])-start(gr[1])+1, lty=2, lwd=2)
+@
+\end{center}
+
+Apart from these general functionalities, two specific applications of interest in 
+epigenetic are the determination of ChIP-seq enrichment and of the PolII stalling index.
+
+In (epi)genomics ChIP-seq is an experimental method to identify the genomic regions 
+which are bound by a DNA binding protein (if any), such as transcription factor or
+an histone mark. Such experiments are typically conducted comparing a sample in which
+an antibody specific for the target protein was used to enrich for the bound genomic
+DNA (ChIP), which is then compared to a control sample where the antibody was not
+used (input). Comparing the signal in the ChIP and input samples allows identifying
+regions of significant enrichment, the so called ChIP-seq peaks. The peaks can also
+be quantitatively scored to give a measure to the binding intensity of the factor of
+interest. The \Rmethod{GRenrichment} method can be used to determine this 
+\textbf{enrichment}. First the number of reads in the ChIP sample within the peak is
+determined and normalized by the total number of reads aligned in the BAM file (ChIPw),
+then the same is done for the input sample (inputw). Finally the log2(ChIPw - inputw)
+is determined which was shown to be approximatively linearly correalated to the log of
+the qPCR enrichment, typically used for validation.
+
+The \textbf{PolII stalling index} is a measure that is commonly determined to estimate
+the degree of stalling of the Polymeras II in the region around the Transcription Start
+Sites (TSS), which is somehow related to the elongation rate, the speed at which the
+PolII is actively elongating and transcribing the open reading frame. The stalling index
+is determined as the ratio of the PolII ChIP-seq signal in the TSS region compared to the
+gene body, and can be determined using the \Rfunction{stallingIndex} function and is
+typically visualized with cumulative plot generated by the \Rfunction{plotStallingIndex}
+function.
+
+%
+\section{Annotation of genomic regions}
+These methods can be used to assign to genomic ranges annotations concerning gene 
+annotation and user-defined databases. Specifically, the \Rmethod{TSS} and 
+\Rmethod{distanceFromTSS} methods can be used to determine the Transcription Start
+Sites positions for all transcript in a \Rclass{TranscriptDb} database and to compute
+the distance between a set of genomic regions and the most proximal TSS. The
+\Rmethod{GRangesInPromoters} is a convenience wrapper to subset a \Rclass{GRanges} object
+keeping only ranges overlapping (or not) with gene promoter regions. All these methods
+plus \Rmethod{GRmidpoint} are used by \Rmethod{GRannotateSimple} to partition a set of
+genomic ranges into those overlapping with promoters, intragenic and intergenic regions.
+
+Apart from genes and promoters, numerous other genomic annotation resources are available
+for example in the UCSC table browser. These or other user-defined regions of interest,
+together with genes and promoter annotations can be used with the \Rmethod{GRannotate}
+method to obtain the complete annotation of a set of genomic ranges. This is illustrated
+in the following example, where CpG Islands (CGIs) are considered in addition to genes and
+promoters. In the output each genomic range is put in the context of the nearest TSS
+('nearest' columns), the specific location in which it falls ('location' columns) and
+the overlap with CGIs:
+
+
+<<GRann, message=FALSE,cache=TRUE>>=
+TSSpos <- TSS(txdb)
+gr <- TSSpos[1:5]
+start(gr) <- start(gr) - 1000
+end(gr) <- end(gr) - 600
+mcols(gr) <- NULL
+# retrieving CGI mm9 islands from UCSC annotation tables
+session <- browserSession()
+genome(session) <- 'mm9'
+query <- ucscTableQuery(session, 'cpgIslandExt')
+CGIgr <- as(track(query), 'GRanges')
+res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.egSYMBOL, 
+	upstream=2000, downstream=1000, userAnn=GRangesList(CGI=CGIgr))
+show(res)
+@
+
+The \Rmethod{makeGtfFromDb} method can be used to export a gene or transcript level
+GTF file to be used with standard aligners, such as TopHat or reads counting tools,
+such as the one available in HTSeq, in order to be consistent with analyses performed
+within R and Bioconductor.
+
+
+\section{Functional annotation}
+A number of functions and methods is available to define epigenetically relevant
+functional annotations. The \Rmethod{enhancers} allows pointing to putative
+enhancers based on H3K4me1 (thus pointing to enhancers which could be either active
+or poised) or H3K27ac (thus pointing to active enhancers) marks. To this purpose,
+distal peaks of these marks laying outside gene promoters are identified, and required
+to not overlap with CpG Islands to avoid peaks matching to potentially unannotated
+promoter regions.
+
+Using the \Rmethod{matchEnhancers} it is possible to match enhancers with putative
+targets sites. Target sites could either be TSS or transcription factor binding sites
+localized at the level of promoters. Constraints are given based on a minimum or
+maximum distance between the enhancer and the target site. At the same time no
+additional TSS have to be present in between the enhancer and the putative target
+site (identification of 'direct' enhancers). This does not apply if those TSS
+belong to isoforms of the same gene. This method returns: (i) a set of reference
+regions without any interacting direct enhancers, (ii) a set of enhancers sites
+having putative taget regions, and (iii) those of putative target regions under
+control of enhancer sites. Lists (ii) and (iii) are ordered so that they can be
+immediately matched. Finally, if TF binding is provided, these two lists will be
+further divided considering only TF-bound TSS (target regions) which are bound by
+to enhancer bound from the same TF or not. This could set the foundation for
+further explorative analyses on nextworks of enhancers and target regions,
+possibly as a function of the binding of a TF.
+
+\Rfunction{topGOres} and \Rfunction{simplifyGOterms} are convenience functions
+to deal to GeneOntology enrichment analyses. In particular the latter can be
+used to keep only the most informative GO terms. This is based on the fact that
+GeneOntology is composed of three different ontologies (Biological Processes,
+Molecular Functions and Cellular Components). Within each ontology, a set of
+GO terms describing those categories are available, together with the relationships
+linking them. Terms specifying more precisely a biological category are called
+children (e.g. induction of apopotosis) of more generic parent terms (e.g. apopotosis).
+Most informative GO terms to keep are defined here as those terms for which an enriched
+children term mapping to a very similar set of genes has not been also identified.
+If that happens, the children term is believed to contain most of the information,
+and typically better specifies the enrichmed GO category, comprared to the more general,
+less specific, parent term which are thus discarded. 
+
+\Rfunction{findLncRNA} is a function to point to putative intergenic long non-coding
+RNAs (lncRNAs). These are typically identifed thanks to their epigenetic signatures,
+characteristic of transcriptional units unrelated from gene-coding ones, associated
+to known genes. For simplicity, this function can only point to lncRNAs which are distal
+from gene transcriptional units, to avoid False Positives due to overlap with coding
+transcriptional units. While the detection is mostly based on H3K4me3 and H3K4me1 peaks,
+additional marks and RNA-seq data can be used to have a more robust lncRNAs
+identification. See the documentation of the \Rfunction{findLncRNA} function for details.
+
+\Rfunction{getPromoterClass} can be used to classify promoters according to their
+CpG content. In fact, it has been show that promoters with significantly different
+CpG content can be differently responsive to the presence/absence or even to the
+level of epigenetic marks such as DNA-methylation (Koga et al, Genome Research 2009).
+
+%
+\section{Visualization}
+\Rfunction{heatmapData} and the associated \Rfunction{heatmapPlot} are very
+flexible functions that can be used with a range of data types to associate counts
+for multiple data or annotation tracks to genomic regions of interst (ROIs), and
+suqsequently visualizing similarites in those patterns. Supported data types range
+from BAM files, \Rclass{GRanges} objects, GRanges metadata, putative methylation sites
+and their associated absolute and relative methylation level. All these data types are
+highly relevant for epigenomics integrative analyses and can include but they are not
+limited to: base-resolution or low-resolution DNA methylation data, histone marks,
+transcription factor binding, RNA-seq expression, which can be freely combined (data tracks).
+Importantly, predefined or user-defined genomic annotation(s) (annotation tracks)
+could be overlayed to further stratify the patterns emerging from the data tracks.
+
+The counts associated to each given data track can be visualized using heatmaps,
+clustering regions with similar patterns over all (or a subset) of the provided
+data and annotation tracks (easily dozens of them, covering hundreads or thousands
+of genomic regions), together with the underlying gene annotation on the forward
+and reverse strand. ROIs can be potentially divided in a number of bins to provide
+higher resolution and information about patterns of the data within those regions.
+
+BAM files can be provided to count reads in ROIs; these files could countain any
+kind of high-throughput sequencing data (including histone marks or transcription
+factor binding sites) in the case one wants to focus to the density of the reads
+on the genome, independently from the identification of significantly enriched/scoring
+regions. On the other hand \Rclass{GRanges} can be provided to pass for example
+ChIP-seq peaks, or MeDIP-seq methylated regions, focusing on presence/absence of a
+given mark in the ROIs. The \Rmethod{mcols} of \Rclass{GRanges} having th esame length
+of the ROIs could be also pre-populated by the user and used directly to fill in the
+relavant information of a given data track. DNA methylation relevant data could be
+provided using \Rclass{GElist} or \Rclass{GEcollection} object of the \Rpackage{methylPipe}
+package. All these data types can be freely combined in the input list of the
+\Rfunction{heatmapPlot} function.
+
+Importantly, the colorscale in the heatmap can otionally be set to display the
+significane of the data associated with any track in each genomic region.
+In the following example two very simple heatmaps are drawn, reporting putative
+transcription factor binding sites (actually TSS proximal regions) in the context
+of gene annotation (introns and exons are reported with dark and light red in the
+forward and reverse strand, respectively). In the following heatmap the same is
+displayed according to the p-value for each peak, where regions associated to high
+p-values are dimmed to a less intense colour.
+
+
+\begin{center}
+<<GRheat1,fig.width=6,fig.height=9,out.width='.85\\textwidth',message=FALSE,cache=TRUE>>=
+gr <- TSSpos[1:50]
+start(gr) <- start(gr) - 1000
+end(gr) <- end(gr) - 600
+extgr <- GRanges(seqnames(gr), ranges=IRanges(start(gr) - 1000, end(gr) + 1000))
+data <- heatmapData(grl=list(ChIPseq=gr), refgr=extgr, type='gr', nbins=20, txdb=txdb)
+pvalues <- c(runif(20,1e-20,1e-8), runif(15,1e-4,1e-2), runif(15,0.5,1))
+pvalues <- cbind(pvalues, rep(0, 50), rep(0, 50))
+rownames(data[[1]][[1]]) <- paste(1:50, signif(pvalues[,1],1), sep=' # ')
+heatmapPlot(matList=data[[1]], clusterInds=1:3)
+@
+\end{center}
+
+\begin{center}
+<<GRheat2,fig.width=6,fig.height=9,out.width='.85\\textwidth',message=FALSE,cache=TRUE>>=
+heatmapPlot(matList=data[[1]], sigMat=pvalues, clusterInds=1:3)
+@
+\end{center}
+
+
+\newpage
+\section{Session Information}
+<<info,echo=TRUE>>=
+sessionInfo()
+@
+
+\end{document}
+
