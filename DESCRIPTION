@@ -10,7 +10,7 @@ License: GPL
 LazyLoad: yes
 Imports: AnnotationDbi, BiocGenerics, Biostrings, Rsamtools, parallel,
         grDevices, gplots, IRanges, GenomicFeatures, XVector,
-        methylPipe, GO.db, S4Vectors
+        methylPipe, GO.db, S4Vectors, GenomeInfoDb
 Depends: R (>= 3.0), methods, topGO, GenomicRanges
 Suggests: BSgenome.Mmusculus.UCSC.mm9,
         TxDb.Mmusculus.UCSC.mm9.knownGene, org.Mm.eg.db, knitr,
