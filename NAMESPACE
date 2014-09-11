@@ -1,22 +1,19 @@
 import(methods)
 import(topGO)
+import(AnnotationDbi)
+import(Rsamtools)
+import(S4Vectors)
 
 importFrom(GenomicRanges, GRanges, coverage)
 importFrom(GenomeInfoDb, seqnames)
-importFrom(AnnotationDbi, as.list)
 importFrom(BiocGenerics, unlist, intersect, strand, "strand<-", width)
 importFrom(Biostrings, writeXStringSet, DNAString, DNAStringSet)
-importFrom(Rsamtools, ApplyPileupsParam, PileupFiles, scanBamFlag)
 importFrom(grDevices, colorRampPalette)
 importFrom(gplots, heatmap.2)
 importFrom(parallel, makeCluster)
 importFrom(GO.db, GOCCPARENTS, GOBPPARENTS, GOMFPARENTS, GOTERM)
-importFrom(IRanges, IRanges)
-importFrom(S4Vectors,as.matrix, Rle, queryHits, subjectHits, mcols, "mcols<-")
 
 importMethodsFrom(methylPipe, binC, binmC, binrC, binscore)
-importMethodsFrom(AnnotationDbi, species, mget)
-importMethodsFrom(AnnotationDbi, keys, select)
 importMethodsFrom(IRanges, nearest, distance, promoters, countOverlaps,
                   findOverlaps, Views, overlapsAny)
 importMethodsFrom(GenomicFeatures, exonsBy, transcriptsBy, transcripts)
@@ -24,12 +21,9 @@ importMethodsFrom(XVector, subseq)
 importMethodsFrom(Biostrings, countPattern, getSeq, vcountPattern,
                   complement, reverse, subseq, Views, length)
 importMethodsFrom(BiocGenerics, clusterApplyLB, clusterEvalQ, union)
-importMethodsFrom(Rsamtools, applyPileups, ScanBamParam, countBam, scanBamHeader)
 
-importClassesFrom(S4Vectors,Hits)
 importClassesFrom(IRanges, IRanges)
 importClassesFrom(GenomicRanges, GRanges)
-importClassesFrom(Biostrings, DNAString, XStringSet)
 importClassesFrom(methylPipe, GEcollection, GElist)
 
 exportPattern("^[[:alpha:]]+")
