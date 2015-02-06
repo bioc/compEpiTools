@@ -1,7 +1,7 @@
 setGeneric('GRcoverageInbins', function(Object, bam, Nnorm=TRUE,
-                                        Snorm=TRUE, Nbins) standardGeneric('GRcoverageInbins'))
+                                        Snorm=FALSE, Nbins) standardGeneric('GRcoverageInbins'))
 setMethod('GRcoverageInbins','GRanges', function(Object, bam,
-                                                 Nnorm=TRUE, Snorm=TRUE, Nbins) {
+                                                 Nnorm=TRUE, Snorm=FALSE, Nbins) {
     if(!is.character(bam))
         stop('bam has to be a file path of class character ..')
     if(!is.logical(Nnorm) || !is.logical(Snorm))
