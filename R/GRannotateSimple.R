@@ -1,17 +1,14 @@
-setGeneric('GRannotateSimple', function(gr, txdb, upstream=2000, downstream=1000, plot=TRUE)
+setGeneric('GRannotateSimple', function(gr, txdb, upstream=2000, downstream=1000)
            standardGeneric('GRannotateSimple'))
 setMethod('GRannotateSimple','GRanges', function(gr, txdb, upstream=2000,
-                                                 downstream=1000, plot=TRUE) {
+                                                 downstream=1000) {
     if(!is(txdb,'TxDb'))
         stop('txdb has to be an object of class TxDb ...')
     if(!is.numeric(upstream))
         stop('upstream has to be an object of class numeric ...')
     if(!is.numeric(downstream))
         stop('downstream has to be an object of class numeric ...')
-    if(!is.logical(plot))
-      stop('plot has to be either TRUE or FALSE ...')
-    
-
+  
     grList <- list()
 
                                         # promoter
@@ -42,12 +39,15 @@ setMethod('GRannotateSimple','GRanges', function(gr, txdb, upstream=2000,
     }
     else grList$intergenic <- NA
     
-    if(plot)
-    {
-      anno_type <- sapply(grList, length)
-      labels <- paste0(names(anno_type),"\n", anno_type)
-      pie(anno_type, main="Genomic Annotation", labels=labels)
-    }
-
+    ind <- which(is.na(grList)=="TRUE")
+    if (length(ind) > 0)
+      {
+        grList <- grList[-c(ind)]
+        return(grList)
+      }
+    anno_type <- sapply(grList, length)
+    cols=c("brown","#ddaa00","beige")
+    labels <- paste0(names(anno_type),"\n", anno_type)
+    pie(anno_type, main="Genomic Annotation", labels=labels, col=cols)
     return(grList)
 })
