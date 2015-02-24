@@ -8,8 +8,8 @@
   \tabular{ll}{
     Package: \tab compEpiTools\cr
     Type: \tab Package\cr
-    Version: \tab 0.1\cr
-    Date: \tab 2014-04-07\cr
+    Version: \tab 1.0.2 \cr
+    Date: \tab 2015-02-24 \cr
     License: \tab GPL\cr
     Depends: \tab methods\cr
   }
