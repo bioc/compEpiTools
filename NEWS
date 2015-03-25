@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.0.3
+------------------------
+ o The following functions are updated
+   + GRannotate, TSS: Txdb with duplicate transcript name was resulting in error in these functions. Now all the transcripts with duplicate transcript name are removed before performing annotation.
+
 CHANGES IN VERSION 1.0.2
 ------------------------
  o The following functions are updated

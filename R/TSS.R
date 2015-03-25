@@ -5,6 +5,12 @@ TSS <- function(txdb) {
     TSSr <- promoters(txdb, upstream=0, downstream=0)
     ann <- select(txdb, keys=transcripts(txdb)$tx_name,
                   keytype='TXNAME', columns=c('TXNAME','GENEID'))
+    ind <- which(duplicated(TSSr$tx_name)==TRUE)
+    if(length(ind) >0)
+    {
+      TSSr <- TSSr[-c(ind)]
+      ann <- ann[-c(ind),]
+    }
     rownames(ann) <- ann[,1]
     names(TSSr) <- ann[TSSr$tx_name,'GENEID']
                                         # take min pos for - and max for + strand genes
