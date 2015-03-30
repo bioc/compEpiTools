@@ -6,8 +6,8 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
         stop('GRannotate: A GRanges with width 1 is expected ..')
     if(!is(txdb, "TxDb"))
         stop('txdb has to be of class TxDb ..')
-    if(!is(EG2GS,"AnnDbBimap"))
-        stop('EG2GS has to be of class AnnDbBimap ..')
+    if(!is(EG2GS,"OrgDb"))
+        stop('EG2GS has to be of class OrgDb ..')
     if(!is.numeric(upstream))
         stop('upstream has to be of class numeric ..')
     if(!is.numeric(downstream))
@@ -52,7 +52,34 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
                            type='any', select='all')
     qHits <- queryHits(gbInGR)
     sHits <- subjectHits(gbInGR)
-    EG2GS <- as.list(EG2GS)
+    
+       ##### adding gene information
+    anno_obj <- deparse(substitute(EG2GS))
+    type <- metadata(txdb)[8,2]
+    if (type == "Entrez Gene ID") {
+      kt <- "ENTREZID"
+    } else if (type =="Ensembl gene ID" || type == "Ensembl Gene ID") {
+      kt <- "ENSEMBL"
+    } else {
+      warnings("geneID type in TranscriptDb is not supported...\t Gene information cannot be mapped...\n")
+    }
+    if(kt == "ENTREZID")
+    {
+      anno_obj_name <- sub("eg.db","egSYMBOL",anno_obj)
+      annoDb <- eval(parse(text=anno_obj_name))
+      EG2GS <- as.list(annoDb)
+    }
+    else if (kt == "ENSEMBL")
+    {
+      anno_obj_name <- sub("eg.db","egSYMBOL",anno_obj)
+      annoDb <- eval(parse(text=anno_obj_name))
+      anno_ens_name <- sub("eg.db","egENSEMBL",anno_obj)
+      annoDb_ens <- eval(parse(text=anno_ens_name))
+      EG2GS <- as.list(annoDb)
+      EG2GS_ens <- as.list(annoDb_ens)
+      names(EG2GS) <- EG2GS_ens
+    }
+    
     gbHitsEG <- tapply(names(gbNotProm[qHits]), INDEX=as.factor(sHits),
                        FUN=paste, collapse=';')
     gbHitsTX <- tapply(gbNotProm[qHits]$tx_name, INDEX=as.factor(sHits),

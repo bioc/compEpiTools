@@ -19,8 +19,7 @@
     \itemize{
       \item Object: a GRanges object with ranges of width 1
       \item txdb: TxDb
-      \item EG2GS: mapping between EntreGene and gene symbols; like
-      org.Mm.egSYMBOL, org.Hs.egSYMBOL
+      \item EG2GS: an object of class OrgDb; like org.Mm.eg.db, org.Hs.eg.db (use the exact name of object)
       \item upstream: numeric, bp upstream the TSS to define promoters
       \item downstream: numeric, bp downstream the TSS to define promoters
       \item userAnn: either NULL or a named GRangesList containing user
@@ -81,7 +80,7 @@ gr <- TSSpos[1:5]
 start(gr) <- start(gr) - 1000
 end(gr) <- end(gr) - 600
 mcols(gr) <- NULL
-res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.egSYMBOL, 
+res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.eg.db, 
 	upstream=2000, downstream=1000)
 isActiveSeq(txdb) <- rep(TRUE, length(isActiveSeq(txdb)))
 ## alternatively, CGI can be incoirporated as follow:
@@ -90,6 +89,6 @@ isActiveSeq(txdb) <- rep(TRUE, length(isActiveSeq(txdb)))
 # genome(session) <- 'mm9'
 # query <- ucscTableQuery(session, 'cpgIslandExt')
 # CGIgr <- as(track(query), 'GRanges')
-# res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.egSYMBOL, 
+# res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.eg.db, 
 #	upstream=2000, downstream=1000, userAnn=GRangesList(CGI=CGIgr))
 }

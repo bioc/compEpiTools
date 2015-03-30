@@ -140,7 +140,7 @@ session <- browserSession()
 genome(session) <- 'mm9'
 query <- ucscTableQuery(session, 'cpgIslandExt')
 CGIgr <- as(track(query), 'GRanges')
-res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.egSYMBOL, 
+res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.eg.db, 
 	upstream=2000, downstream=1000, userAnn=GRangesList(CGI=CGIgr))
 show(res)
 @
