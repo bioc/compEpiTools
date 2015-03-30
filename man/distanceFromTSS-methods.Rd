@@ -19,7 +19,7 @@
       \itemize{
 	\item Object: GRanges
 	\item txdb: TxDb
-	\item EG2GS: the mapping EntreGene ids to gene symbols; like org.Mm.egSYMBOL
+	\item EG2GS: an object of class OrgDb; like org.Mm.eg.db, org.Hs.eg.db (use the exact name of object)
       }
       
       The method returns a GRanges with additional columns.

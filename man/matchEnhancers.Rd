@@ -24,8 +24,7 @@
       \item maxD: a positive numeric; the maximum distance between an enhancer
       and a target genomic region
       \item txdb: an object of class TxDb
-      \item EG2GS: mapping between EntreGene and gene symbols; like
-      org.Mm.egSYMBOL
+      \item EG2GS: an object of class OrgDb; like org.Mm.eg.db, org.Hs.eg.db (use the exact name of object)
       \item TFGR: an optional GRanges collecting genomic regions bound
       from a transcription factor which also binds promoters
     }
@@ -83,5 +82,5 @@
   	load(H3K4me1GR)
 	enh <- enhancers(H3K4me1GR, txdb)
 	m.enh <- matchEnhancers(enhGR=enh, minD=2e4, maxD=2e5, 
-		txdb=txdb, EG2GS=org.Mm.egSYMBOL)
+		txdb=txdb, EG2GS=org.Mm.eg.db)
 }

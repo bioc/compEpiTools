@@ -19,7 +19,7 @@ setMethod('matchEnhancers','GRanges', function(enhGR, minD=2e4, maxD=2e5, txdb,
     if(downstream <= 0) stop('downstream has to be positive ...')
     if(maxD <= 0) stop('minD has to be positive ...')
     if(!is(txdb, "TxDb")) stop('txdb has to be of class TxDb ..')
-    if(!is(EG2GS,"AnnDbBimap")) stop('EG2GS has to be of class AnnDbBimap ..')
+    if(!is(EG2GS,"OrgDb")) stop('EG2GS has to be of class OrgDb ..')
 
     TSSgr <- TSS(txdb)
 
@@ -28,7 +28,7 @@ setMethod('matchEnhancers','GRanges', function(enhGR, minD=2e4, maxD=2e5, txdb,
                                         # TF bound promoters
         mP <- GRangesInPromoters(Object=TFGR, txdb=txdb,
                                  upstream=upstream, downstream=upstream)
-        mP <- distanceFromTSS(mP, txdb, as.list(EG2GS))
+        mP <- distanceFromTSS(mP, txdb, EG2GS)
     }
     else mP <- TSSgr # .. otherwise, TSS are the reference
 
