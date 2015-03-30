@@ -17,20 +17,10 @@ setMethod('distanceFromTSS','GRanges', function(Object, txdb,
       anno_obj <- deparse(substitute(EG2GS))
       type <- metadata(txdb)[8,2]
       if (type == "Entrez Gene ID") {
-        kt <- "ENTREZID"
-      } else if (type =="Ensembl gene ID" || type == "Ensembl Gene ID") {
-        kt <- "ENSEMBL"
-      } else {
-        warnings("geneID type in TranscriptDb is not supported...\t Gene information cannot be mapped...\n")
-      }
-      if(kt == "ENTREZID")
-      {
         anno_obj_name <- sub("eg.db","egSYMBOL",anno_obj)
         annoDb <- eval(parse(text=anno_obj_name))
         EG2GS <- as.list(annoDb)
-      }
-      else if (kt == "ENSEMBL")
-      {
+      } else if (type =="Ensembl gene ID" || type == "Ensembl Gene ID") {
         anno_obj_name <- sub("eg.db","egSYMBOL",anno_obj)
         annoDb <- eval(parse(text=anno_obj_name))
         anno_ens_name <- sub("eg.db","egENSEMBL",anno_obj)
@@ -38,6 +28,8 @@ setMethod('distanceFromTSS','GRanges', function(Object, txdb,
         EG2GS <- as.list(annoDb)
         EG2GS_ens <- as.list(annoDb_ens)
         names(EG2GS) <- EG2GS_ens
+      } else {
+        warnings("geneID type in TranscriptDb is not supported...\t Gene information cannot be mapped...\n")
       }
       nearestGS<- as.character(EG2GS[nearestEG])
     }
