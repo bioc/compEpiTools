@@ -27,6 +27,12 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
     suppressWarnings(prom <- promoters(gb, upstream=upstream, downstream=downstream))
     gb <- unlist(gb)
     prom <- unlist(prom)
+    ind <- which(duplicated(gb$tx_name)==TRUE)
+    if(length(ind) > 0)
+    {
+      gb <- gb[-c(ind)]
+      prom <- prom[-c(ind)]
+    }
 
                                         # cutting promoter regions downstream the TSS from genebody regions
     shortinds <- which(width(gb) <= downstream)

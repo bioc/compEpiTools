@@ -1,8 +1,8 @@
 Package: compEpiTools
 Type: Package
 Title: Tools for computational epigenomics
-Version: 1.1.1
-Date: 2015-02-06
+Version: 1.1.2
+Date: 2015-03-25
 Author: http://genomics.iit.it/groups/computational-epigenomics.html
 Maintainer: Kamal Kishore <kamal.fartiyal84@gmail.com>
 Description: Tools for computational epigenomics developed for the analysis, integration and simultaneous 
@@ -15,4 +15,5 @@ Depends: R (>= 3.1.1), methods, topGO, GenomicRanges
 Suggests: BSgenome.Mmusculus.UCSC.mm9, TxDb.Mmusculus.UCSC.mm9.knownGene, org.Mm.eg.db, knitr, rtracklayer
 VignetteBuilder: knitr
 biocViews: GeneExpression, Sequencing, Visualization, GenomeAnnotation, Coverage
+
 

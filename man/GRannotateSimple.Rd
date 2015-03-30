@@ -15,7 +15,7 @@
   \describe{
     To be used in this form:
     
-    GRannotateSimple(gr, txdb, upstream=2000, downstream=1000, plot=TRUE)
+    GRannotateSimple(gr, txdb, upstream=2000, downstream=1000)
     
     where:
     
@@ -24,7 +24,6 @@
       \item txdb: an object of class TxDB
       \item upstream: numeric; the number of bp upstream the TSS
       \item downstream: numeric; the number of bp downstream the TSS
-      \item plot: logical; either TRUE or FALSE
     }
 }}
 \keyword{methods}
