@@ -41,7 +41,7 @@ setMethod('distanceFromTSS','GRanges', function(Object, txdb,
         mcols(Object),
         nearest_tx_name=nearestId,
         distance_fromTSS=nearestDist,
-        nearest_gene_id=nearestEG)
+        nearest_gene_id=nearestEG, stringsAsFactors=FALSE)
     else mcols(Object)<- data.frame(
         mcols(Object),
         nearest_tx_name=nearestId,
