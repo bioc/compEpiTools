@@ -72,6 +72,7 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
       warnings("geneID type in TranscriptDb is not supported...\t Gene information cannot be mapped...\n")
     }
     
+    TSSdist$nearest_gene_symbol <- as.character(EG2GS[TSSdist$nearest_gene_id])
     gbHitsEG <- tapply(names(gbNotProm[qHits]), INDEX=as.factor(sHits),
                        FUN=paste, collapse=';')
     gbHitsTX <- tapply(gbNotProm[qHits]$tx_name, INDEX=as.factor(sHits),
