@@ -21,7 +21,7 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
     mcols(ObjectNoMcols) <- NULL
                                         # distance from closer TSS and its annotation
     TSSdist <- distanceFromTSS(Object=ObjectNoMcols, txdb=txdb, EG2GS=EG2GS)
-
+    
                                         # defining gene bodies and promoters
     gb <- transcriptsBy(txdb, by='gene')
     suppressWarnings(prom <- promoters(gb, upstream=upstream, downstream=downstream))

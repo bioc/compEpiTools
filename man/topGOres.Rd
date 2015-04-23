@@ -7,7 +7,7 @@
   ids
 }
 \usage{topGOres(ids, ontology='BP', Pthr=1e-05, maxN=5000, minN=5,
-orgdb, allEG=keys(orgdb))}
+orgdb, allEG=keys(orgdb),showTerms=NULL)}
 \arguments{ 
   \item{ids}{character; an array of human or mouse EntrezGene ids}
   \item{ontology}{one of the three GO ontologies: BP (Biological
@@ -18,10 +18,11 @@ orgdb, allEG=keys(orgdb))}
     annotated on the genome are considered}
   \item{minN}{numeric; only GO terms with a minimum of minN genes
     annotated on the genome are considered}
-  \item{orgdb}{An object of class OrgDb; either org.Mm.eg.db or
-    org.Hs.eg.db}
+  \item{orgdb}{An object of class OrgDb; either org.Hs.eg.db, org.Mm.eg.db
+    or org.Dm.eg.db}
   \item{allEG}{character; the reference universe of EntrezGene ids, by
     default all of them}
+  \item{showTerms}{numeric: the number of GO terms to plot; NULL: no plotting}  
 }
 \details{
   Determines GeneOntology (GO) enriched terms for a set of Entrez gene
@@ -44,8 +45,9 @@ orgdb, allEG=keys(orgdb))}
   \item{Significant}{number of genes in ids for the specific GOterms}
   \item{Expected}{expected number of GOterms genes in ids in case of
     random enrichment}
-  \item{Classic}{pvalue for th eenrichment as reported from the topGO
+  \item{Classic}{pvalue for the enrichment as reported from the topGO
     package}
+  \item{Genes}{Gene ids of significantly annotated genes for each specific GOterms}
 }
 \references{http://genomics.iit.it/groups/computational-epigenomics.html}
 \seealso{topGOdata in the topGO Bioconductor package}
