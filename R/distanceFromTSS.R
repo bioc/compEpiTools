@@ -1,7 +1,7 @@
-setGeneric('distanceFromTSS', function(Object, txdb, EG2GS)
+setGeneric('distanceFromTSS', function(Object, txdb, EG2GS=NULL)
            standardGeneric('distanceFromTSS'))
 setMethod('distanceFromTSS','GRanges', function(Object, txdb,
-                                                EG2GS) {
+                                                EG2GS=NULL) {
     if(!is(txdb,"TxDb")) stop('txdb has to be of class TxDb ..')
     if(!is.null(EG2GS) && !is(EG2GS,"OrgDb"))
         stop('EG2GS has to be either NULL or an object of class OrgDb ..')
