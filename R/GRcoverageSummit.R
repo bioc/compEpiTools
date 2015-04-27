@@ -17,9 +17,8 @@ setMethod('GRcoverageSummit','GRanges', function(Object, bam) {
       maxPos[maxPosL > 1] <-
         sapply(maxPos[maxPosL > 1], function(x) sample(x, 1))
       maxPos <- unlist(maxPos)
-      }
-    else 
-      maxPos <- unlist(maxPos)
+    }
+    else maxPos <- unlist(maxPos)
     start(Object) <- maxPos
     end(Object) <- maxPos
 

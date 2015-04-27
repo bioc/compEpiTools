@@ -17,9 +17,9 @@
   \describe{
     To be used in this form:
     
-    GRcoverage(Object, bam, Nnorm=TRUE, Snorm=FALSE)
+    GRcoverage(Object, bam, Nnorm=TRUE, Snorm=TRUE)
     
-    GRcoverageInbins(Object, bam, Nnorm=TRUE, Snorm=FALSE, Nbins)
+    GRcoverageInbins(Object, bam, Nnorm=TRUE, Snorm=TRUE, Nbins)
     
     where:
     
