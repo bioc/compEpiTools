@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.3.1
+------------------------
+ o The following function is updated
+   + GRcoverageSummit: the BAM file base-coverage can now be optionally corrected based on a control BAM file (subtracting the control base-coverage, after normalizing both for library size), before looking for the maximum coverage position (summit).
+
 CHANGES IN VERSION 1.0.5
 ------------------------
  o The following function is updated
