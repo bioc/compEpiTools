@@ -16,6 +16,10 @@ setMethod('GRangesInPromoters','GRanges', function(Object, txdb,
   suppressWarnings(pregions <- promoters(txdb, upstream=upstream, downstream=downstream, 
                                          columns=c('tx_id','tx_name','gene_id')))
   
+  names(pregions) <- pregions$gene_id
+  inds <- which(start(pregions)<0)
+  if(length(inds)>0) start(pregions)[inds]=1
+  
   inds <- overlapsAny(query= Object,
                       subject= pregions, minoverlap=1L, type='any')
   if(invert) {
