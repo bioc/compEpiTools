@@ -16,7 +16,9 @@ setMethod('distanceFromTSS','GRanges', function(Object, txdb,
     if(!is.null(EG2GS))
     {
       anno_obj <- deparse(substitute(EG2GS))
-      type <- metadata(txdb)[8,2]
+      metadata_txdb <- metadata(txdb)
+      ind <- which(metadata_txdb[,1]=="Type of Gene ID")
+      type <- metadata_txdb[ind,2]
       if (type == "Entrez Gene ID") {
         anno_obj_name <- sub("eg.db","egSYMBOL",anno_obj)
         annoDb <- eval(parse(text=anno_obj_name))
