@@ -59,10 +59,8 @@ is identified and highlighted in the plot of base-level coverage for one of thes
 
 <<libs, message=FALSE, cache=TRUE, warning= FALSE>>=
 library(compEpiTools)
-require(BSgenome.Mmusculus.UCSC.mm9)
 require(TxDb.Mmusculus.UCSC.mm9.knownGene)
 require(org.Mm.eg.db)
-require(rtracklayer)
 txdb <- TxDb.Mmusculus.UCSC.mm9.knownGene
 @
 
@@ -136,10 +134,8 @@ start(gr) <- start(gr) - 1000
 end(gr) <- end(gr) - 600
 mcols(gr) <- NULL
 # retrieving CGI mm9 islands from UCSC annotation tables
-session <- browserSession()
-genome(session) <- 'mm9'
-query <- ucscTableQuery(session, 'cpgIslandExt')
-CGIgr <- as(track(query), 'GRanges')
+cgipath <- system.file("extdata", "CGIgr.Rdata", package="compEpiTools")
+load(cgipath)
 res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.eg.db, 
 	upstream=2000, downstream=1000, userAnn=GRangesList(CGI=CGIgr))
 show(res)

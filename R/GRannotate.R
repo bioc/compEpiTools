@@ -22,6 +22,7 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
   # distance from closer TSS and its annotation
   TSSdist <- distanceFromTSS(Object=ObjectNoMcols, txdb=txdb, EG2GS=EG2GS)
   
+  
   # defining gene bodies and promoters
   gb <- transcripts(txdb, columns=c('tx_id','tx_name','gene_id'))
   suppressWarnings(prom <- promoters(txdb, upstream=upstream, downstream=downstream, 
@@ -57,7 +58,9 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
   
   ##### adding gene information
   anno_obj <- deparse(substitute(EG2GS))
-  type <- metadata(txdb)[8,2]
+  metadata_txdb <- metadata(txdb)
+  ind <- which(metadata_txdb[,1]=="Type of Gene ID")
+  type <- metadata_txdb[ind,2]
   if (type == "Entrez Gene ID") {
     anno_obj_name <- sub("eg.db","egSYMBOL",anno_obj)
     annoDb <- eval(parse(text=anno_obj_name))
@@ -73,7 +76,6 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
   } else {
     warnings("geneID type in TranscriptDb is not supported...\t Gene information cannot be mapped...\n")
   }
-  
   TSSdist$nearest_gene_symbol <- as.character(EG2GS[TSSdist$nearest_gene_id])
   gbHitsEG <- tapply(names(gbNotProm[qHits]), INDEX=as.factor(sHits),
                      FUN=paste, collapse=';')
@@ -152,4 +154,5 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
   
   return(Object)
 })
+
 
