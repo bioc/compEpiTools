@@ -134,10 +134,10 @@ start(gr) <- start(gr) - 1000
 end(gr) <- end(gr) - 600
 mcols(gr) <- NULL
 # retrieving CGI mm9 islands from UCSC annotation tables
-cgipath <- system.file("extdata", "CGIgr.Rdata", package="compEpiTools")
+cgipath <- system.file("extdata", "CGIgr_mm9.Rdata", package="compEpiTools")
 load(cgipath)
 res <- GRannotate(Object=GRmidpoint(gr), txdb=txdb, EG2GS=org.Mm.eg.db, 
-	upstream=2000, downstream=1000, userAnn=GRangesList(CGI=CGIgr))
+	upstream=2000, downstream=1000, userAnn=GRangesList(CGI=CGIgr_mm9))
 show(res)
 @
 
