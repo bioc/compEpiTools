@@ -1,9 +1,9 @@
 Package: compEpiTools
 Type: Package
 Title: Tools for computational epigenomics
-Version: 1.5.0
-Date: 2015-09-29
-Author: http://genomics.iit.it/groups/computational-epigenomics.html
+Version: 1.5.1
+Date: 2015-03-23
+Author: Mattia Pelizzola, Kamal Kishore
 Maintainer: Kamal Kishore <kamal.fartiyal84@gmail.com>
 Description: Tools for computational epigenomics developed for the analysis, integration and simultaneous 
   visualization of various (epi)genomics data types across multiple genomic regions in multiple samples.
