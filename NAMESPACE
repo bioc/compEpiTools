@@ -10,7 +10,7 @@ importFrom(BiocGenerics, unlist, intersect, strand, "strand<-", width)
 importFrom(Biostrings, writeXStringSet, DNAString, DNAStringSet)
 importFrom(grDevices, colorRampPalette)
 importFrom(gplots, heatmap.2)
-importFrom(ggplot2, ggplot)
+importFrom(ggplot2,ggplot,aes,geom_bar,coord_flip,ylab)
 importFrom(parallel, makeCluster)
 importFrom(GO.db, GOCCPARENTS, GOBPPARENTS, GOMFPARENTS, GOTERM)
 
