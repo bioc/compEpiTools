@@ -42,6 +42,7 @@ topGOres <- function(ids, ontology='BP', Pthr=1e-5, maxN=5000,
     resdf$Term <- Term(GOTERM[resdf$GO.ID])
     pvals <- resdf$classic
     pvals <- as.numeric(sub('<', '', pvals))
+    resdf$classic <- pvals
     inds <- which(resdf$Annotated < maxN & pvals < Pthr)
     if(length(inds) == 0) return(NULL)
     resdf <- resdf[inds,]
