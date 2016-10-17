@@ -14,21 +14,19 @@ setMethod('GRcoverageInbins','GRanges', function(Object, bam,
     covList <- GRbaseCoverage(Object=Object, bam=bam, Nnorm=Nnorm)
 
     coverageMat <- matrix(NA, length(Object), Nbins)
-    binsize <- round(width(Object) / Nbins)
     widths <- width(Object)
+    startPosMat= matrix(NA, length(Object), Nbins)
+    for(i in 1:length(Object)) startPosMat[i,]= round(seq(1,widths[i], length.out=Nbins+1))[-(Nbins+1)]
+    endPosMat= cbind(startPosMat[,-1]-1, as.numeric(widths))
+    binsizeMat= endPosMat-startPosMat+1
     for(bin in 1:Nbins) {
-        startPos <- binsize * (bin - 1) + 1
-        if(bin == Nbins) endPos <- widths
-        else endPos <- startPos + binsize - 1
         for(gr in 1:length(Object)) coverageMat[gr,bin] <-
-            sum(covList[[gr]][startPos[gr]:endPos[gr]])
+            sum(covList[[gr]][startPosMat[gr,bin]:endPosMat[gr,bin]])
         if(Snorm) {
-            if(bin == Nbins) coverageMat[,bin] <-
-                coverageMat[,bin] / (widths- binsize*(Nbins-1))
-            else coverageMat[,bin] <- coverageMat[,bin] / binsize
+            coverageMat[,bin] <- coverageMat[,bin] / binsizeMat[,bin]
         }
     }
-    coverageMat[Nbins>widths]<- NA
+    coverageMat[widths<Nbins,]<- NA
     return(coverageMat)
 })
 

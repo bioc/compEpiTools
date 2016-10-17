@@ -1,8 +1,8 @@
 Package: compEpiTools
 Type: Package
 Title: Tools for computational epigenomics
-Version: 1.7.3
-Date: 2016-10-06
+Version: 1.7.4
+Date: 2016-10-17
 Author: Mattia Pelizzola, Kamal Kishore
 Maintainer: Kamal Kishore <kamal.fartiyal84@gmail.com>
 Description: Tools for computational epigenomics developed for the analysis, integration and simultaneous 
