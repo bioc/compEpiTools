@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.7.4
+------------------------
+ o The following function is updated
+   + GRcoverageInbins: A small bug in the GRcoverageInbins method was fixed: the problem resulted in incorrect coverage (reported as NA) in the last bin(s) of short intervals, those for which the number of bins is similar to their width.
+   
 CHANGES IN VERSION 1.7.3
 ------------------------
  o The following function is updated
