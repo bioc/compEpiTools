@@ -16,8 +16,7 @@ setMethod('countOverlapsInBins','GRanges',
         queryBin<- GRanges(
             seqnames= seqnames(query),
             ranges=IRanges(start=startPos, end=endPos))
-        countMat[, bin]<- countOverlaps(queryBin, subject,
-                                        maxgap=0L, minoverlap=1L, type='any')
+        countMat[, bin]<- countOverlaps(queryBin, subject)
     }
     countMat[countMat > 1]<- 1
 

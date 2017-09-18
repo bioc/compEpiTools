@@ -51,8 +51,7 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
   locGS <- rep(NA, length(Object)
   )
   # looking for the overlap of Object ranges with genebodies
-  gbInGR <- findOverlaps(query=gbNotProm, subject=Object,
-                         type='any', select='all')
+  gbInGR <- findOverlaps(query=gbNotProm, subject=Object)
   qHits <- queryHits(gbInGR)
   sHits <- subjectHits(gbInGR)
   
@@ -91,8 +90,7 @@ setMethod('GRannotate','GRanges', function(Object, txdb, EG2GS,
   if(length(gbHitsL) > 0) loc[as.numeric(names(gbHitsL))] <- gbHitsL
   
   # looking for the overlap of Object ranges with promoters
-  promInGR <- findOverlaps(query=prom, subject=Object,
-                           type='any', select='all')
+  promInGR <- findOverlaps(query=prom, subject=Object)
   qHits <- queryHits(promInGR)
   sHits <- subjectHits(promInGR)
   promHitsEG <- tapply(names(prom[qHits]), INDEX=as.factor(sHits),

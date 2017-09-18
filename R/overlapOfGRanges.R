@@ -11,8 +11,7 @@ overlapOfGRanges <- function(GRlist, plot=TRUE) {
     colnames(overlapMatrix) <- names(GRlist)
     for(i in 1:grL) {
         for(j in (1:grL)[-i]) {
-            res <- countOverlaps(query= GRlist[[i]], subject= GRlist[[j]],
-                                 maxgap=0L, minoverlap=1L, type='any')
+            res <- countOverlaps(query= GRlist[[i]], subject= GRlist[[j]])
             count <- length(which(res > 0))
             overlapMatrix[i,j] <- 100 * count / length(GRlist[[i]])
         }

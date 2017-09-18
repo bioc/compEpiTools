@@ -20,8 +20,7 @@ setMethod('GRangesInPromoters','GRanges', function(Object, txdb,
   inds <- which(start(pregions)<0)
   if(length(inds)>0) start(pregions)[inds]=1
   
-  inds <- overlapsAny(query= Object,
-                      subject= pregions, minoverlap=1L, type='any')
+  inds <- overlapsAny(query= Object, subject= pregions)
   if(invert) {
     inds_f <- which(inds==FALSE)
     if(length(inds_f) > 0)

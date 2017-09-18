@@ -76,7 +76,7 @@ heatmapData <- function(grl, refgr=grl[[1]], useScore=rep(FALSE, length(grl)),
                                         subject=grl[[obji]], nbins=nbins)
                                         # a score is provided with the GRanges and is mapped to refgr
             if(useScore[obji] && ncol(mcols(grl[[obji]])) > 0) {
-                sres <- findOverlaps(query=refgr, subject=grl[[obji]], select='all')
+                sres <- findOverlaps(query=refgr, subject=grl[[obji]])
                 qInds <- queryHits(sres)
                 sInds <- subjectHits(sres)
                                         # the minimum score is considered
