@@ -1,4 +1,4 @@
-function (matList, sigMat = NULL, qnorm = NULL, tnorm = NULL, 
+heatmapPlot <- function (matList, sigMat = NULL, qnorm = NULL, tnorm = NULL, 
     rowLab = FALSE, colLab = TRUE, margins = NULL, colors = NULL, 
     clusterInds = 1:length(matList), dendrogram = TRUE) 
 {
