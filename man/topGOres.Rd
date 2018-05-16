@@ -9,7 +9,7 @@
 \usage{topGOres(ids, ontology='BP', Pthr=1e-05, maxN=5000, minN=5,
 orgdb, allEG=keys(orgdb),showTerms=NULL)}
 \arguments{ 
-  \item{ids}{character; an array of human or mouse EntrezGene ids}
+  \item{ids}{can be either a vector or a list of human or mouse EntrezGene ids}
   \item{ontology}{one of the three GO ontologies: BP (Biological
     Processes), CC (Cellular Components) or MF (Molecular Functions)}
   \item{Pthr}{numeric [0,1]; the p-value for an enrichment to be

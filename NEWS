@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.15.1
+------------------------
+o The following function is updated
+
+   + heatmapPlot.R: the function was updated removing a useless call to hclust, thus reducing by half the time required for clustering. 
+
+   + topGOres.R: the function was sligtly modified to be more efficient in case of GO enrichment analysis of multiple gene sets. The indexing of the ontology is now performed only once, greatly improving the speed of the function. 
+   
 CHANGES IN VERSION 1.7.4
 ------------------------
  o The following function is updated
