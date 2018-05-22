@@ -1,4 +1,4 @@
-topGOres2 <- function (ids, ontology = "BP", Pthr = 1e-05, maxN = 5000, minN = 5, 
+topGOres <- function (ids, ontology = "BP", Pthr = 1e-05, maxN = 5000, minN = 5, 
     orgdb, allEG = keys(orgdb), showTerms = NULL) 
 {
     if (!is.list(ids) & !is.character(ids))
