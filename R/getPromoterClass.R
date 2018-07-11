@@ -16,7 +16,6 @@ setMethod('getPromoterClass','TxDb', function(object, Nproc=1,
   
   suppressWarnings(prom <- promoters(txdb, upstream=upstream, downstream=downstream, 
                                      columns=c('tx_id','tx_name','gene_id')))
-  names(prom) <- prom$gene_id
   inds <- which(start(prom)<0)
   if(length(inds)>0) start(prom)[inds]=1
   tssGR <- unique(sort(prom))
