@@ -22,7 +22,6 @@ setMethod('matchEnhancers','GRanges', function(enhGR, minD=2e4, maxD=2e5, txdb,
     if(!is(EG2GS,"OrgDb")) stop('EG2GS has to be of class OrgDb ..')
 
     TSSgr <- TSS(txdb)
-
                                         # if a TF binding promoters is given, TF peaks at promoters are the reference
     if(!is.null(TFGR)) {
                                         # TF bound promoters
@@ -31,6 +30,7 @@ setMethod('matchEnhancers','GRanges', function(enhGR, minD=2e4, maxD=2e5, txdb,
         mP <- distanceFromTSS(mP, txdb, EG2GS)
     }
     else mP <- TSSgr # .. otherwise, TSS are the reference
+    names(mP) <- NULL
 
                                         # distance from closest enhancer
     mPdist2enh <- as.data.frame(distanceToNearest(x=mP, subject=enhGR))
