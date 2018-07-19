@@ -12,6 +12,11 @@ importFrom(grDevices, colorRampPalette)
 importFrom(gplots, heatmap.2)
 importFrom(parallel, makeCluster)
 importFrom(GO.db, GOCCPARENTS, GOBPPARENTS, GOMFPARENTS, GOTERM)
+importFrom("grDevices", "rainbow")
+importFrom("graphics", "layout", "legend", "par", "pie", "plot",
+             "points")
+importFrom("stats", "as.dendrogram", "dist", "hclust", "quantile")
+importFrom("utils", "write.table")
 
 importMethodsFrom(methylPipe, binC, binmC, binrC, binscore)
 importMethodsFrom(IRanges, nearest, distance, promoters, countOverlaps,

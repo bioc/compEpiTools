@@ -91,23 +91,23 @@ clusterInds=1:length(matList), dendrogram=TRUE)}
   See Also as \code{\link{heatmap.2}}
 }
 \examples{
-require(TxDb.Mmusculus.UCSC.mm9.knownGene)
-txdb <- TxDb.Mmusculus.UCSC.mm9.knownGene
-isActiveSeq(txdb) <- c(TRUE, rep(FALSE, length(isActiveSeq(txdb)) - 1))
-TSSpos <- TSS(txdb)
-gr <- TSSpos[1:50]
-start(gr) <- start(gr) - 1000
-end(gr) <- end(gr) - 600
-pvalues <- c(runif(20,1e-20,1e-8), runif(15,1e-4,1e-2), runif(15,0.5,1))
-mcols(gr) <- pvalues
-extgr <- GRanges(seqnames(gr), ranges= IRanges(start(gr) - 1000, end(gr) + 1000))
-data <- heatmapData(grl=list(ChIPseq=gr), refgr=extgr, type='gr', useScore=TRUE,
-  Nnorm=TRUE, Snorm=TRUE, nbins=6, txdb=txdb)
-rownames(data[[1]][[1]]) <- paste(1:50, signif(pvalues,1), sep=' # ')
-heatmapPlot(matList=data$matList, qnorm=NULL, tnorm=NULL, 
-  rowLab=TRUE, colLab=TRUE, clusterInds=1:3)
-dev.new()
-heatmapPlot(matList=data$matList, sigMat=data$scoreMat, qnorm=NULL, tnorm=NULL, 
-  rowLab=TRUE, colLab=TRUE, clusterInds=1:3)
-restoreSeqlevels(txdb)
+#require(TxDb.Mmusculus.UCSC.mm9.knownGene)
+#txdb <- TxDb.Mmusculus.UCSC.mm9.knownGene
+#isActiveSeq(txdb) <- c(TRUE, rep(FALSE, length(isActiveSeq(txdb)) - 1))
+#TSSpos <- TSS(txdb)
+#gr <- TSSpos[1:50]
+#start(gr) <- start(gr) - 1000
+#end(gr) <- end(gr) - 600
+#pvalues <- c(runif(20,1e-20,1e-8), runif(15,1e-4,1e-2), runif(15,0.5,1))
+#mcols(gr) <- pvalues
+#extgr <- GRanges(seqnames(gr), ranges= IRanges(start(gr) - 1000, end(gr) + 1000))
+#data <- heatmapData(grl=list(ChIPseq=gr), refgr=extgr, type='gr', useScore=TRUE,
+#  Nnorm=TRUE, Snorm=TRUE, nbins=6, txdb=txdb)
+#rownames(data[[1]][[1]]) <- paste(1:50, signif(pvalues,1), sep=' # ')
+#heatmapPlot(matList=data$matList, qnorm=NULL, tnorm=NULL, 
+#  rowLab=TRUE, colLab=TRUE, clusterInds=1:3)
+#dev.new()
+#heatmapPlot(matList=data$matList, sigMat=data$scoreMat, qnorm=NULL, tnorm=NULL, 
+#  rowLab=TRUE, colLab=TRUE, clusterInds=1:3)
+#restoreSeqlevels(txdb)
 }

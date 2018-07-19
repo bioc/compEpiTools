@@ -97,7 +97,7 @@ heatmapData <- function(grl, refgr=grl[[1]], useScore=rep(FALSE, length(grl)),
     }
 
     names(reslist) <- names(grl)
-    rownames(reslist[[1]]) <- names(refgr)
+    #rownames(reslist[[1]]) <- names(refgr)
     Colsep <- cumsum(sapply(reslist, ncol))
 
     if(!is.null(txdb)) {
