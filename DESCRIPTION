@@ -1,7 +1,7 @@
 Package: compEpiTools
 Type: Package
 Title: Tools for computational epigenomics
-Version: 1.15.3
+Version: 1.16.0
 Date: 2018-07-19
 Authors@R: as.person(c(
     "Mattia Pelizzola [aut]", 
