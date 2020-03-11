@@ -4,7 +4,7 @@ heatmapPlot <- function (matList, sigMat = NULL, qnorm = NULL, tnorm = NULL,
 {
     if (!is(matList, "list")) 
         stop("matList has to be of class list ...")
-    if (!all(sapply(matList, class) == "matrix")) 
+    if (!all(sapply(matList, is.matrix))) 
         stop("matList has to be a list of matrices ...")
     if (!all(sapply(matList, ncol) == ncol(matList[[1]]))) 
         stop("matList has to be a list of matrices with\n        the same number of columns ...")
