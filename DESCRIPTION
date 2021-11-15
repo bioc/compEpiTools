@@ -1,7 +1,7 @@
 Package: compEpiTools
 Type: Package
 Title: Tools for computational epigenomics
-Version: 1.29.0
+Version: 1.29.1
 Date: 2020-03-11
 Authors@R: as.person(c(
     "Mattia Pelizzola [aut]", 
@@ -16,5 +16,6 @@ Depends: R (>= 3.1.1), methods, topGO, GenomicRanges
 Suggests: BSgenome.Mmusculus.UCSC.mm9, TxDb.Mmusculus.UCSC.mm9.knownGene, org.Mm.eg.db, knitr, rtracklayer
 VignetteBuilder: knitr
 biocViews: GeneExpression, Sequencing, Visualization, GenomeAnnotation, Coverage
+PackageStatus: Deprecated
 
 
