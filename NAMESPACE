@@ -25,8 +25,8 @@ importMethodsFrom(GenomicFeatures, exonsBy, transcriptsBy, transcripts)
 importMethodsFrom(XVector, subseq)
 importMethodsFrom(Biostrings, countPattern, getSeq, vcountPattern,
                   complement, reverse, subseq, Views, length)
-importMethodsFrom(BiocGenerics, clusterApplyLB, clusterEvalQ, union)
-
+importMethodsFrom(parallel, clusterApplyLB, clusterEvalQ)
+importMethodsFrom(BiocGenerics, union)
 importClassesFrom(IRanges, IRanges)
 importClassesFrom(GenomicRanges, GRanges)
 importClassesFrom(methylPipe, GEcollection, GElist)
