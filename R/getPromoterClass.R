@@ -73,6 +73,5 @@ setMethod('getPromoterClass','TxDb', function(object, Nproc=1,
   # loading the compEpiTools and genomic sequence library on each node
   clRes <- clusterApplyLB(cl, chrs, pcChr, tssGR=tssGR, ORG=org)
   promcomb <- do.call("c",clRes)
-  stopCluster(cl)
   return(promcomb)
 })
