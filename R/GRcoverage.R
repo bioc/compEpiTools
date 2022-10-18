@@ -12,7 +12,7 @@ setMethod('GRcoverage','GRanges', function(Object, bam,
     matchingSeqs <- which(as.character(seqnames(Object)) %in% BAMseqs)
 
     if(length(matchingSeqs) == 0) return(rep(0, length(Object)))
-    param <- ApplyPileupsParam(which=Object[matchingSeqs], what='seq')
+    param <- ApplyPileupsParam(which=Object[matchingSeqs], what='seq', maxDepth=1000000)
 
     coverage <- unlist(applyPileups(PileupFiles(bam),
                                     FUN=function(x) sum(x$seq), param=param))

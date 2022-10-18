@@ -12,7 +12,7 @@ setMethod('GRbaseCoverage','GRanges', function(Object, bam, Nnorm=FALSE) {
     if(length(matchingSeqs) == 0) return(sapply(width(Object),
                  function(x) rep(0, x))) # return a list of 0 base-coverage
 
-    param <- ApplyPileupsParam(which=Object[matchingSeqs], what='seq')
+    param <- ApplyPileupsParam(which=Object[matchingSeqs], what='seq', maxDepth=1000000)
     coverage <- applyPileups(PileupFiles(bam), FUN=function(x) x, param=param)
     widths <- width(Object[matchingSeqs])
     covList <- list()

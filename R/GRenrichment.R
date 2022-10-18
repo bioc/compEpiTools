@@ -13,7 +13,7 @@ setMethod('GRenrichment','GRanges', function(Object, bam, bamRef) {
     matchingSeqs <- which(as.character(seqnames(Object)) %in% BAMseqs)
 
     if(length(matchingSeqs) == 0) return(rep(NA, length(Object)))
-    paramP <- ApplyPileupsParam(which=Object[matchingSeqs], what='seq')
+    paramP <- ApplyPileupsParam(which=Object[matchingSeqs], what='seq', maxDepth=1000000)
     paramS <- ScanBamParam(flag=scanBamFlag(isUnmappedQuery=FALSE))
 
                                         # bam coverage
