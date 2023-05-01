@@ -3,17 +3,11 @@ Type: Package
 Title: Tools for computational epigenomics
 Version: 1.33.1
 Date: 2022-10-18
-Authors@R: c(person("Mattia", "Pelizzola", role = "aut"),
-person("Kamal", "Kishore", role = "aut"),
-person("Mattia", "Furlan", email = "mattia.furlan@iit.it", role = c("ctb","cre")))
-Description: Tools for computational epigenomics developed for the analysis, integration and simultaneous 
-  visualization of various (epi)genomics data types across multiple genomic regions in multiple samples.
+Authors@R: c(person("Mattia", "Pelizzola", role = "aut"), person("Kamal", "Kishore", role = "aut"), person("Mattia", "Furlan", email = "mattia.furlan@iit.it", role = c("ctb","cre")))
+Description: Tools for computational epigenomics developed for the analysis, integration and simultaneous visualization of various (epi)genomics data types across multiple genomic regions in multiple samples.
 License: GPL
-Imports: AnnotationDbi, BiocGenerics, Biostrings, Rsamtools, parallel, grDevices, gplots, IRanges, GenomicFeatures, 
-  XVector, methylPipe, GO.db, S4Vectors, GenomeInfoDb
+Imports: AnnotationDbi, BiocGenerics, Biostrings, Rsamtools, parallel, grDevices, gplots, IRanges, GenomicFeatures, XVector, methylPipe, GO.db, S4Vectors, GenomeInfoDb
 Depends: R (>= 3.1.1), methods, topGO, GenomicRanges
 Suggests: BSgenome.Mmusculus.UCSC.mm9, TxDb.Mmusculus.UCSC.mm9.knownGene, org.Mm.eg.db, knitr, rtracklayer
 VignetteBuilder: knitr
 biocViews: GeneExpression, Sequencing, Visualization, GenomeAnnotation, Coverage
-
-
