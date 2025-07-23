@@ -1,12 +1,12 @@
 Package: compEpiTools
 Type: Package
 Title: Tools for computational epigenomics
-Version: 1.43.0
-Date: 2023-05-02
+Version: 1.43.1
+Date: 2025-07-22
 Authors@R: c(person("Mattia", "Pelizzola", role = "aut"), person("Kamal", "Kishore", role = "aut"), person("Mattia", "Furlan", email = "mattia.furlan@iit.it", role = c("ctb","cre")))
 Description: Tools for computational epigenomics developed for the analysis, integration and simultaneous visualization of various (epi)genomics data types across multiple genomic regions in multiple samples.
 License: GPL
-Imports: AnnotationDbi, BiocGenerics, Biostrings, Rsamtools, parallel, grDevices, gplots, IRanges, GenomicFeatures, XVector, methylPipe, GO.db, S4Vectors, GenomeInfoDb
+Imports: AnnotationDbi, BiocGenerics, Biostrings, Rsamtools, parallel, grDevices, gplots, IRanges, GenomicFeatures, XVector, methylPipe, GO.db, S4Vectors, Seqinfo
 Depends: R (>= 3.1.1), methods, topGO, GenomicRanges
 Suggests: BSgenome.Mmusculus.UCSC.mm9, TxDb.Mmusculus.UCSC.mm9.knownGene, org.Mm.eg.db, knitr, rtracklayer
 VignetteBuilder: knitr

@@ -5,7 +5,7 @@ import(Rsamtools)
 import(S4Vectors)
 
 importFrom(GenomicRanges, GRanges, coverage)
-importFrom(GenomeInfoDb, seqnames)
+importFrom(Seqinfo, seqnames)
 importFrom(BiocGenerics, unlist, intersect, strand, "strand<-", width)
 importFrom(Biostrings, writeXStringSet, DNAString, DNAStringSet)
 importFrom(grDevices, colorRampPalette)
